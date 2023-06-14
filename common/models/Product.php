@@ -32,6 +32,7 @@ class Product extends \yii\db\ActiveRecord
 
     /** @var UploadedFile */
     public $imageFile;
+
     /**
      * {@inheritdoc}
      */
@@ -57,7 +58,7 @@ class Product extends \yii\db\ActiveRecord
             [['name', 'price', 'status'], 'required'],
             [['description'], 'string'],
             [['price'], 'number'],
-            [['imageFile'], 'image', 'extensions' => 'png, jpg, jpeg, webp', 'maxSize' => 10 * 1024 *1024],
+            [['imageFile'], 'image', 'extensions' => 'png, jpg, jpeg, webp', 'maxSize' => 10 * 1024 * 1024],
             [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['image'], 'string', 'max' => 2000],
@@ -137,29 +138,32 @@ class Product extends \yii\db\ActiveRecord
 
     public function save($runValidation = true, $attributeNames = null)
     {
-        if($this->imageFile){
+        if ($this->imageFile) {
 //            $this->image = Yii::getAlias('@frontend/web/storage/products/'.Yii::$app->security->generateRandomString(255).'/'.$this->imageFile->name);
-              $this->image = '/products/'.Yii::$app->security->generateRandomString().'/'.$this->imageFile->name;
+            $this->image = '/products/' . Yii::$app->security->generateRandomString() . '/' . $this->imageFile->name;
         }
 
         $transaction = Yii::$app->db->beginTransaction();
         $ok = parent::save($runValidation, $attributeNames);
 
-        if($ok){
-            $fullPath = Yii::getAlias('@frontend/web/storage'.$this->image);
+        if ($ok && $this->imageFile) {
+            $fullPath = Yii::getAlias('@frontend/web/storage' . $this->image);
             $dir = dirname($fullPath);
-           if(!FileHelper::createDirectory($dir) || !$this->imageFile->saveAs($fullPath)){
+            if (!FileHelper::createDirectory($dir) || !$this->imageFile->saveAs($fullPath)) {
                 $transaction->rollBack();
                 return false;
-           }
-        $transaction->commit();
+            }
         }
-
+        $transaction->commit();
         return $ok;
     }
 
     public function getImageUrl()
     {
-        return Yii::$app->params['frontendUrl'].'/storage'.$this->image;
+        if($this->image){
+            return Yii::$app->params['frontendUrl'] . '/storage' . $this->image;
+        }
+
+        return Yii::$app->params['frontendUrl'].'/storage/img/no_img.jpg';
     }
 }
