@@ -3,6 +3,10 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
+use yii\helpers\FileHelper;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "{{%products}}".
@@ -13,7 +17,7 @@ use Yii;
  * @property string|null $image
  * @property float $price
  * @property int $status
- * @property int|null $crated_At
+ * @property int|null $created_at
  * @property int|null $updated_at
  * @property int|null $created_by
  * @property int|null $updated_by
@@ -25,12 +29,23 @@ use Yii;
  */
 class Product extends \yii\db\ActiveRecord
 {
+
+    /** @var UploadedFile */
+    public $imageFile;
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
         return '{{%products}}';
+    }
+
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::class,
+            BlameableBehavior::class
+        ];
     }
 
     /**
@@ -42,7 +57,8 @@ class Product extends \yii\db\ActiveRecord
             [['name', 'price', 'status'], 'required'],
             [['description'], 'string'],
             [['price'], 'number'],
-            [['status', 'crated_At', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['imageFile'], 'image', 'extensions' => 'png, jpg, jpeg, webp', 'maxSize' => 10 * 1024 *1024],
+            [['status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['image'], 'string', 'max' => 2000],
             [['created_by'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['created_by' => 'id']],
@@ -60,9 +76,10 @@ class Product extends \yii\db\ActiveRecord
             'name' => 'Name',
             'description' => 'Description',
             'image' => 'Product Image',
+            'imageFile' => 'Product Image',
             'price' => 'Price',
             'status' => 'Published',
-            'crated_At' => 'Crated At',
+            'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'created_by' => 'Created By',
             'updated_by' => 'Updated By',
@@ -116,5 +133,33 @@ class Product extends \yii\db\ActiveRecord
     public static function find()
     {
         return new \common\models\query\ProductQuery(get_called_class());
+    }
+
+    public function save($runValidation = true, $attributeNames = null)
+    {
+        if($this->imageFile){
+//            $this->image = Yii::getAlias('@frontend/web/storage/products/'.Yii::$app->security->generateRandomString(255).'/'.$this->imageFile->name);
+              $this->image = '/products/'.Yii::$app->security->generateRandomString().'/'.$this->imageFile->name;
+        }
+
+        $transaction = Yii::$app->db->beginTransaction();
+        $ok = parent::save($runValidation, $attributeNames);
+
+        if($ok){
+            $fullPath = Yii::getAlias('@frontend/web/storage'.$this->image);
+            $dir = dirname($fullPath);
+           if(!FileHelper::createDirectory($dir) || !$this->imageFile->saveAs($fullPath)){
+                $transaction->rollBack();
+                return false;
+           }
+        $transaction->commit();
+        }
+
+        return $ok;
+    }
+
+    public function getImageUrl()
+    {
+        return Yii::$app->params['frontendUrl'].'/storage'.$this->image;
     }
 }

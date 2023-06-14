@@ -8,7 +8,7 @@ use yii\db\Migration;
  *
  * - `{{%order}}`
  */
-class m230613_083823_create_order_addresses_table extends Migration
+class m230613_133823_create_order_addresses_table extends Migration
 {
     /**
      * {@inheritdoc}

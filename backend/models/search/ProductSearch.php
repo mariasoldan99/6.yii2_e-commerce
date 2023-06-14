@@ -17,7 +17,7 @@ class ProductSearch extends Product
     public function rules()
     {
         return [
-            [['id', 'status', 'crated_At', 'updated_at', 'created_by', 'updated_by'], 'integer'],
+            [['id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['name', 'description', 'image'], 'safe'],
             [['price'], 'number'],
         ];
@@ -62,7 +62,7 @@ class ProductSearch extends Product
             'id' => $this->id,
             'price' => $this->price,
             'status' => $this->status,
-            'crated_At' => $this->crated_At,
+            'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'created_by' => $this->created_by,
             'updated_by' => $this->updated_by,
