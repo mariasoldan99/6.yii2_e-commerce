@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap4\ActiveForm;
+use dosamigos\ckeditor\CKEditor;
 
 /** @var yii\web\View $this */
 /** @var common\models\Product $model */
@@ -14,14 +15,29 @@ use yii\bootstrap4\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'description')->widget(CKEditor::class, [
+        'options' => ['rows' => 6],
+        'preset' => 'basic'
+    ]) ?>
 
-    <?= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'image', [
+            'template' => '
+                <div class="custom-file">
+                    {input}
+                    {label}
+                    {error}
+                </div>     
+            ',
+        'labelOptions' => ['class' => 'custom-file-label'],
+        'inputOptions' => ['class' => 'custom-file-input']
+    ])->textInput(['type' => 'file']) ?>
 
-    <?= $form->field($model, 'price')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'price')->textInput([
+        'maxLength' => true,
+        'type' => 'number'
+    ]) ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
-
+    <?= $form->field($model, 'status')->checkbox() ?>
 
 
     <div class="form-group">
