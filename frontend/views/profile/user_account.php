@@ -47,7 +47,7 @@ use yii\bootstrap4\ActiveForm;
 </div>
 
 
-<button class="btn btn-primary">Update</button
+<button class="btn btn-primary">Update</button>
 
 <?php ActiveForm::end(); ?>
 <?php \yii\widgets\Pjax::end() ?>
