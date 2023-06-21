@@ -1,6 +1,7 @@
 <?php
 /** @var array $items */
-
+/** @var \common\models\Order $order */
+/** @var float $totalPrice */
 ?>
 <div class="card">
     <div class="card-header">
@@ -22,7 +23,8 @@
 
                 <tbody>
                 <?php foreach ($items as $item): ?>
-                    <tr data-id="<?php echo $item['id']?>" data-url="<?php echo \yii\helpers\Url::to(['/cart/change-quantity'])?>">
+                    <tr data-id="<?php echo $item['id'] ?>"
+                        data-url="<?php echo \yii\helpers\Url::to(['/cart/change-quantity']) ?>">
                         <td><?php echo $item['name'] ?></td>
                         <td>
                             <img src="<?php echo \common\models\Product::formatImageUrl($item['image']) ?>"
@@ -42,14 +44,22 @@
                                 'data-confirm' => 'Are you sure you want to remove this product from cart?'
                             ]) ?>
                         </td>
-
                     </tr>
                 <?php endforeach; ?>
+
                 </tbody>
 
             </table>
             <div class="card-body text-right">
+                <p class="text-right">
+                    <hr>
+                <td>
+                    Total:
+                </td>
+                <td> <?php echo Yii::$app->formatter->asCurrency($totalPrice) ?></td>
+                </p>
                 <a href="<?php echo \yii\helpers\Url::to(['/cart/checkout']) ?>" class="btn btn-primary">Checkout</a>
+
             </div>
         <?php else: ?>
             <p class="text-muted text-center p-5"> There are no items in the cart!</p>

@@ -18,6 +18,7 @@ use Yii;
 class CartItem extends \yii\db\ActiveRecord
 {
     const SESSION_KEY = 'CART_ITEMS';
+
     /**
      * {@inheritdoc}
      */
@@ -81,7 +82,8 @@ class CartItem extends \yii\db\ActiveRecord
         return new \common\models\query\CartItemQuery(get_called_class());
     }
 
-    static function getTotalQuantityForUser($currUserId){
+    static function getTotalQuantityForUser($currUserId)
+    {
         if (\Yii::$app->user->isGuest) {
             $cartItems = \Yii::$app->session->get(CartItem::SESSION_KEY, []);
             $sum = 0;
@@ -95,9 +97,14 @@ class CartItem extends \yii\db\ActiveRecord
         return $sum;
     }
 
-    public static function getItemsForUser($currUserId){
-        return CartItem::findBySql(
-            "SELECT
+    public static function getItemsForUser($currUserId)
+    {
+        if (\Yii::$app->user->isGuest) {
+            $cartItems = \Yii::$app->session->get(CartItem::SESSION_KEY, []);
+
+        } else {
+            $cartItems = CartItem::findBySql(
+                "SELECT
                    c.product_id as id,
                    p.image,
                    p.name,
@@ -107,12 +114,17 @@ class CartItem extends \yii\db\ActiveRecord
             FROM cart_items c
                      LEFT JOIN products p on p.id = c.product_id
             WHERE c.created_by = :userId",
-            ['userId' => $currUserId])
-            ->asArray()
-            ->all();
+                ['userId' => $currUserId])
+                ->asArray()
+                ->all();
+        }
+        return $cartItems;
+
+
     }
 
-    static function getTotalPriceForUser($currUserId){
+    static function getTotalPriceForUser($currUserId)
+    {
         if (\Yii::$app->user->isGuest) {
             $cartItems = \Yii::$app->session->get(CartItem::SESSION_KEY, []);
             $sum = 0;
@@ -127,5 +139,15 @@ class CartItem extends \yii\db\ActiveRecord
                 ->scalar();
         }
         return $sum;
+    }
+
+    public static function clearCartItems($currUserId)
+    {
+        if (Yii::$app->user->isGuest) {
+            Yii::$app->session->remove(CartItem::SESSION_KEY);
+        } else {
+            CartItem::deleteAll(['created_by' => Yii::$app->user->id]);
+        }
+
     }
 }

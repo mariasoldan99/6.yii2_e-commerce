@@ -25,7 +25,7 @@ use function Sodium\add;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
- * @property \common\models\UserAddress[] $addresses
+ * @property UserAddress[] $addresses
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -233,7 +233,7 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * @return \common\models\UserAddress|null
+     * @return UserAddress|null
      */
     public function getAddress(): ?UserAddress
     {

@@ -22,9 +22,9 @@ use yii\web\UploadedFile;
  * @property int|null $created_by
  * @property int|null $updated_by
  *
- * @property CartItems[] $cartItems
+ * @property CartItem[] $cartItems
  * @property User $createdBy
- * @property OrderItems[] $orderItems
+ * @property OrderItem[] $orderItem
  * @property User $updatedBy
  */
 class Product extends \yii\db\ActiveRecord
@@ -108,13 +108,13 @@ class Product extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[OrderItems]].
+     * Gets query for [[OrderItem]].
      *
-     * @return \yii\db\ActiveQuery|\common\models\query\OrderItemsQuery
+     * @return \yii\db\ActiveQuery|\common\models\query\OrderItemQuery
      */
-    public function getOrderItems()
+    public function getOrderItem()
     {
-        return $this->hasMany(OrderItems::class, ['product_id' => 'id']);
+        return $this->hasMany(OrderItem::class, ['product_id' => 'id']);
     }
 
     /**

@@ -3,7 +3,6 @@
 /** @var \common\models\OrderAddress $orderAddress */
 /** @var array $cartItems */
 /** @var int $productQuantity */
-
 /** @var float $totalPrice */
 
 use yii\bootstrap4\ActiveForm;
@@ -12,9 +11,8 @@ use yii\bootstrap4\ActiveForm;
 
 
 <?php $form = ActiveForm::begin([
-    'action' => ['']
+    'id' => 'checkout-form',
 ]); ?>
-
 <div class="row">
     <div class="col">
         <div class="card mb-3">
@@ -65,8 +63,8 @@ use yii\bootstrap4\ActiveForm;
                             <?php echo Yii::$app->formatter->asCurrency($totalPrice) ?>
                         </td>
                     </tr>
-
                 </table>
+                <div id="paypal-button-container"></div>
                 <p class="text-right mt-3">
                     <button class="btn btn-secondary">Checkout</button>
                 </p>
@@ -75,6 +73,6 @@ use yii\bootstrap4\ActiveForm;
     </div>
 
 </div>
-
 <?php ActiveForm::end(); ?>
+
 
