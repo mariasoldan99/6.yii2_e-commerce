@@ -4,8 +4,7 @@ namespace frontend\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
-use \frontedn\base\Controller;
+use \frontend\base\Controller;
 use yii\web\ForbiddenHttpException;
 
 class ProfileController extends Controller
