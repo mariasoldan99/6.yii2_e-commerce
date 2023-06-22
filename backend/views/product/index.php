@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'name',
             'price',
             [
-                'attribute' => 'stats',
+                'attribute' => 'status',
                 'content' => function ($model) {
                     /** @var Product $model */
                     return Html::tag('span', $model->status ? 'Active' : 'Draft', [

@@ -24,26 +24,51 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
+        'id' => 'ordersTable',
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'pager' => [
+                'class' => \yii\bootstrap4\LinkPager::class
+        ],
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            [
+                'attribute' => 'id',
+                'contentOptions' => ['style' => 'width:80px']
+            ],
 
-            'id',
-            'total_price',
-            'status',
-            'firstname',
-            'lastname',
+            [
+                'attribute' => 'fullname',
+                'content' => function ($model) {
+                    return $model->firstname . ' ' . $model->lastname;
+                }
+            ],
+            'total_price:currency',
+            [
+                'attribute' => 'status',
+                'content' => function ($model) {
+                    if ($model->status === Order::STATUS_COMPLETED) {
+                        return Html::tag('span', 'Unpaid', ['class' => 'badge badge-warning']);
+                    }else if($model->status === Order::STATUS_DRAFT){
+                        return Html::tag('span', 'Draft', ['class' => 'badge badge-secondary']);
+                    } else if($model->status === Order::STATUS_FAILURED){
+                        return Html::tag('span', 'Failed', ['class' => 'badge badge-danger']);
+                    }else {
+                        return Html::tag('span', 'Paid', ['class' => 'badge badge-success']);
+                    }
+                }
+            ],
+
             //'email:email',
             //'transaction_id',
             //'paypal_order_id',
-            //'created_at',
+            'created_at:datetime',
             //'created_by',
             [
                 'class' => ActionColumn::className(),
-                'urlCreator' => function ($action, Order $model, $key, $index, $column) {
+                'template' =>'{view} {delete}',
+                'urlCreator' => function ($action, Order $model) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                }
             ],
         ],
     ]); ?>
