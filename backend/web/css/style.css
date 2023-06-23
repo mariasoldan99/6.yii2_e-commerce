@@ -1,8 +1,8 @@
-#ordersTable td {
+#table td {
     white-space: nowrap;
 }
-#ordersTable th a.asc:after,
-#ordersTable th a.desc:after {
+#table th a.asc:after,
+#table th a.desc:after {
 
     -webkit-font-smoothing: antialiased;
     display: inline-block;
@@ -10,14 +10,14 @@
     font-variant: normal;
     text-rendering: auto;
     line-height: 1;
-    font-family: "Font Awesome 5 Free";
+    font-family: "Font Awesome 5 Free", ui-sans-serif;
     font-weight: 900;
     margin-left: 10px;
 }
 
-#ordersTable th a.asc:after {
+#table th a.asc:after {
     content: "\f077";
 }
-#ordersTable th a.desc:after {
+#table th a.desc:after {
     content: "\f078";
 }

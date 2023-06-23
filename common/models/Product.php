@@ -22,7 +22,7 @@ use yii\web\UploadedFile;
  * @property int|null $created_by
  * @property int|null $updated_by
  *
- * @property CartItem[] $cartItems
+ * @property CartItem[] $cartItem
  * @property User $createdBy
  * @property OrderItem[] $orderItem
  * @property User $updatedBy
@@ -88,13 +88,13 @@ class Product extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[CartItems]].
+     * Gets query for [[CartItem]].
      *
-     * @return \yii\db\ActiveQuery|\common\models\query\CartItemsQuery
+     * @return \yii\db\ActiveQuery|\common\models\query\CartItemQuery
      */
     public function getCartItems()
     {
-        return $this->hasMany(CartItems::class, ['product_id' => 'id']);
+        return $this->hasMany(CartItem::class, ['product_id' => 'id']);
     }
 
     /**
@@ -165,14 +165,23 @@ class Product extends \yii\db\ActiveRecord
 
     static function formatImageUrl($imagePath)
     {
-        if($imagePath){
+        if ($imagePath) {
             return Yii::$app->params['frontendUrl'] . '/storage' . $imagePath;
         }
-        return Yii::$app->params['frontendUrl'].'/storage/img/no_img.jpg';
+        return Yii::$app->params['frontendUrl'] . '/storage/img/no_img.jpg';
     }
 
     public function getShortDescription()
     {
-        return \yii\helpers\StringHelper::truncateWords(strip_tags($this->description),30);
+        return \yii\helpers\StringHelper::truncateWords(strip_tags($this->description), 30);
+    }
+
+    public function afterDelete()
+    {
+        parent::afterDelete();
+        if ($this->image) {
+            $dir = Yii::getAlias('@frontend/web/storage') . dirname($this->image);
+            FileHelper::removeDirectory($dir);
+        }
     }
 }
