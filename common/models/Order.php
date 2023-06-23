@@ -26,9 +26,9 @@ use yii\db\Exception;
 class Order extends \yii\db\ActiveRecord
 {
     const STATUS_DRAFT = 0;
-    const STATUS_COMPLETED = 1;
+    const STATUS_COMPLETED = 3;
     const STATUS_FAILURED = 2;
-    const STATUS_PAID = 3;
+    const STATUS_PAID = 1;
 
     /**
      * {@inheritdoc}
@@ -138,6 +138,7 @@ class Order extends \yii\db\ActiveRecord
         }
         return true;
     }
+
     public function getItemsQuantity()
     {
         return $sum = CartItem::findBySql(
@@ -171,6 +172,15 @@ class Order extends \yii\db\ActiveRecord
             ->setTo($this->email)
             ->setSubject('Your orders is confirmed at ' . Yii::$app->name)
             ->send();
+    }
+
+    public static function getStatusLabel()
+    {
+        return [
+            self::STATUS_PAID => 'Paid',
+            self::STATUS_COMPLETED => 'Completed',
+            self::STATUS_DRAFT => 'Draft',
+            self::STATUS_FAILURED => 'Failed'];
     }
 
 }

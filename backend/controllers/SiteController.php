@@ -107,7 +107,7 @@ class SiteController extends Controller
                    SUM(total_price) as total_price
             FROM orders o
                      INNER JOIN order_addresses oa on o.id = oa.order_id
-            WHERE o.status IN (" . Order::STATUS_PAID . ", " . Order::STATUS_COMPLETED . ")
+            WHERE o.status IN (" . Order::STATUS_PAID . ", " . Order::  STATUS_COMPLETED . ")
             GROUP BY country
         ")
             ->asArray()

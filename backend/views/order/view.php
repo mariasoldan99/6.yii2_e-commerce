@@ -38,13 +38,13 @@ $orderAddress = $model->orderAddress
                 'format' =>'html',
                 'value' => function ($model) {
                     if ($model->status === Order::STATUS_COMPLETED) {
-                        return yii\bootstrap4\Html::tag('span', 'Unpaid', ['class' => 'badge badge-warning']);
+                        return yii\bootstrap4\Html::tag('span', 'Completed', ['class' => 'badge badge-success']);
                     } else if ($model->status === Order::STATUS_DRAFT) {
                         return yii\bootstrap4\Html::tag('span', 'Draft', ['class' => 'badge badge-secondary']);
                     } else if ($model->status === Order::STATUS_FAILURED) {
                         return yii\bootstrap4\Html::tag('span', 'Failed', ['class' => 'badge badge-danger']);
                     } else {
-                        return yii\bootstrap4\Html::tag('span', 'Paid', ['class' => 'badge badge-success']);
+                        return yii\bootstrap4\Html::tag('span', 'Paid', ['class' => 'badge badge-primary']);
                     }
                 }
             ],

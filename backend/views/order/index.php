@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'pager' => [
-                'class' => \yii\bootstrap4\LinkPager::class
+            'class' => \yii\bootstrap4\LinkPager::class
         ],
         'columns' => [
             [
@@ -45,15 +45,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'total_price:currency',
             [
                 'attribute' => 'status',
+                'filter' => \yii\bootstrap4\Html::activeDropDownList($searchModel, 'status',  Order::getStatusLabel(), ['class' => 'form-control', 'prompt' => 'All']),
                 'content' => function ($model) {
                     if ($model->status === Order::STATUS_COMPLETED) {
-                        return Html::tag('span', 'Unpaid', ['class' => 'badge badge-warning']);
-                    }else if($model->status === Order::STATUS_DRAFT){
+                        return Html::tag('span', 'Completed', ['class' => 'badge badge-success']);
+                    } else if ($model->status === Order::STATUS_DRAFT) {
                         return Html::tag('span', 'Draft', ['class' => 'badge badge-secondary']);
-                    } else if($model->status === Order::STATUS_FAILURED){
+                    } else if ($model->status === Order::STATUS_FAILURED) {
                         return Html::tag('span', 'Failed', ['class' => 'badge badge-danger']);
-                    }else {
-                        return Html::tag('span', 'Paid', ['class' => 'badge badge-success']);
+                    } else {
+                        return Html::tag('span', 'Paid', ['class' => 'badge badge-primary']);
                     }
                 }
             ],
@@ -65,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'created_by',
             [
                 'class' => ActionColumn::className(),
-                'template' =>'{view} {delete}',
+                'template' => '{view} {delete}',
                 'urlCreator' => function ($action, Order $model) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                 }
