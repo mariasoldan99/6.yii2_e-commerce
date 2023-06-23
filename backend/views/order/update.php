@@ -1,5 +1,6 @@
 <?php
 
+use yii\bootstrap4\ActiveForm;
 use yii\helpers\Html;
 
 /** @var yii\web\View $this */
@@ -14,8 +15,17 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?= $this->render('_form', [
-        'model' => $model,
+    <?php $form = ActiveForm::begin(); ?>
+
+    <?= $form->field($model, 'status')->dropdownList([
+            \common\models\Order::STATUS_PAID => 'Paid',
+            \common\models\Order::STATUS_COMPLETED => 'Completed'
     ]) ?>
+
+    <div class="form-group">
+        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+    </div>
+
+    <?php ActiveForm::end(); ?>
 
 </div>
