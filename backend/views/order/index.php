@@ -66,7 +66,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'template' => '{view} {delete} {update}',
                 'urlCreator' => function ($action, Order $model) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                }
+                },
+                'contentOptions' => [
+                        'class' => 'td-actions'
+                ]
             ],
         ],
     ]); ?>

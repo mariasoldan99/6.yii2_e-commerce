@@ -21,3 +21,10 @@
 #table th a.desc:after {
     content: "\f078";
 }
+
+.td-actions{
+    white-space: nowrap;
+}
+.table th {
+    white-space: nowrap;
+}
