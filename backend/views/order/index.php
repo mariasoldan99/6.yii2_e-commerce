@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'created_by',
             [
                 'class' => ActionColumn::className(),
-                'template' => '{view} {delete} {update}',
+                'template' => '{view} {update}',
                 'urlCreator' => function ($action, Order $model) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                 },
