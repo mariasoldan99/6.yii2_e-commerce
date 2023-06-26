@@ -25,6 +25,7 @@ class AppController extends Controller
             Console::output('Password: '.$password);
         }else {
             Console::error("User \"$username\" was not created");
+            var_dump($user->errors);
         }
     }
 }
