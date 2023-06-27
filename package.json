@@ -1,0 +1,22 @@
+{
+  "name": "6.yii2_e-commerce",
+  "version": "1.0.0",
+  "description": "Yii 2 Ecommerce",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx webpack",
+    "build": "npx webpack --config webpack.config-prod.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "css-loader": "^6.8.1",
+    "mini-css-extract-plugin": "^2.7.6",
+    "sass": "^1.63.6",
+    "sass-loader": "^13.3.2",
+    "style-loader": "^3.3.3",
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.4"
+  }
+}

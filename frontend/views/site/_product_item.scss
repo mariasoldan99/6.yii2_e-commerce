@@ -1,0 +1,15 @@
+.img-wrapper {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  img {
+    width: auto;
+    max-height: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    display: block;
+  }
+
+}
