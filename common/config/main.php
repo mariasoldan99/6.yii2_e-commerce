@@ -23,16 +23,20 @@ return [
 //                    'basePath' => '@common/messages/yii',
 //                ],
                 'app*' => [
-                    'class' => \yii\i18n\PhpMessageSource::class,
-                    'basePath' => '@common/messages',
-
+                    'class' => \yii\i18n\DbMessageSource::class,
+//                    'basePath' => '@common/messages',
+                    'on missingTranslation' => [
+                       '\common\components\TranslationEventHandler',
+                        'handleMissingTranslation'
+                    ]
                 ],
                 '*' => [
-                    'class' => \yii\i18n\PhpMessageSource::class,
-                    'basePath' => '@common/messages',
+                    'class' => \yii\i18n\DbMessageSource::class,
+//                    'basePath' => '@common/messages',
 
                 ]
-            ]
+            ],
+
 
         ]
     ]

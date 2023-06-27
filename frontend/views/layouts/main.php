@@ -52,11 +52,11 @@ AppAsset::register($this);
                 'label' => Yii::t('app', 'Welcome {name}', ['name' => Yii::$app->user->identity->getDisplayName()]),
                 'items' => [
                     [
-                        'label' => 'Profile',
+                        'label' => Yii::t('app','Profile'),
                         'url' => ['/profile/index'],
                     ],
                     [
-                        'label' => 'Logout',
+                        'label' => Yii::t('app','Logout'),
                         'url' => ['/site/logout'],
                         'linkOptions' => [
                             'data-method' => 'post'
@@ -90,14 +90,12 @@ AppAsset::register($this);
                     <p class="fa-pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
                 </div>
                 <div class="col text-right">
-                    <p class="fa-pull-right">Created by: MSld</p>
+                    <p class="fa-pull-right"><?php echo Yii::t('app','Created by: MSld') ?></p>
                 </div>
             </div>
         </div>
     </footer>
 
-    <?php $price = 100;
-    echo Yii::t('app', 'Price: {0,currencyCode}', $price)?>
     <?php $this->endBody() ?>
     </body>
     </html>

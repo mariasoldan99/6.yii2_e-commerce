@@ -17,15 +17,14 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Created by: MSld' => 'Create de către: MSld',
+    'Created by: MSld' => '',
     'If you forgot your password you can' => '',
-    'Login' => 'Loghează-te',
-    'Logout' => 'Deloghează-te',
+    'Login' => '',
+    'Logout' => '',
     'Need new verification email?' => '',
-    'Please fill out the following fields to login:' => 'Vă rugăm să completați următoarele câmpuri pentru a vă autentifica:',
-    'Price: {0,currencyCode}' => '@@Preț: {0,currencyCode}@@',
-    'Profile' => 'Profil',
-    'Signup' => 'Conectează-te',
-    'Welcome {name}' => 'Bine ați venit, {name}',
+    'Please fill out the following fields to login:' => '',
+    'Profile' => '',
+    'Signup' => '',
+    'Welcome {name}' => '',
     'reset it' => '',
 ];
