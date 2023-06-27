@@ -1,3 +1,6 @@
+/** */
+
+import "../scss/style.scss";
 $(function () {
     const $cartQuantity = $('#cart-quantity');
     const $addToCart = $('.btn-add-to-cart');

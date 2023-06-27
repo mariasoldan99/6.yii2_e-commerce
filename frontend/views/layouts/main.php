@@ -45,11 +45,11 @@ AppAsset::register($this);
             ],
         ];
         if (Yii::$app->user->isGuest) {
-            $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-            $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+            $menuItems[] = ['label' => Yii::t('app', 'Signup'), 'url' => ['/site/signup']];
+            $menuItems[] = ['label' => Yii::t('app', 'Login'), 'url' => ['/site/login']];
         } else {
             $menuItems[] = [
-                'label' => Yii::$app->user->identity->getDisplayName(),
+                'label' => Yii::t('app', 'Welcome {name}', ['name' => Yii::$app->user->identity->getDisplayName()]),
                 'items' => [
                     [
                         'label' => 'Profile',
@@ -96,6 +96,8 @@ AppAsset::register($this);
         </div>
     </footer>
 
+    <?php $price = 100;
+    echo Yii::t('app', 'Price: {0,currencyCode}', $price)?>
     <?php $this->endBody() ?>
     </body>
     </html>
